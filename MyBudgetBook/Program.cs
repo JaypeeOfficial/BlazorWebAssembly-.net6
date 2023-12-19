@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using MyBudgetBook.Data;
+using MyBudgetBook.Data.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<BudgetBookService>();
+
+var connectionString = builder.Configuration.GetConnectionString("DevConnection");
+builder.Services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(connectionString));
+
 
 var app = builder.Build();
 
