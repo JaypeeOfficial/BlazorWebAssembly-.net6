@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyBudgetBook.Data;
 using MyBudgetBook.Data.DatabaseContext;
+using MyBudgetBook.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSingleton<BudgetBookService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DevConnection");
 builder.Services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(connectionString));
+
+builder.Services.AddTransient<IPersonService, PersonService>();
 
 
 var app = builder.Build();
